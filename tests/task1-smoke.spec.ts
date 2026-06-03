@@ -21,3 +21,23 @@ test("Navigation Links Work", async ({ page }) => {
   await page.getByRole("link", { name: "Contact" }).click();
   await expect(page).toHaveURL("/contact");
 });
+
+test("Products Are Displayed", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.locator('[data-test="product-01KT3WDQC3D0J228YJ7EZDK564"]')).toBeVisible();
+  await expect(page.locator('[data-test="product-01KT3WDQC3D0J228YJ7EZDK564"] [data-test="product-name"]')).toContainText("Combination Pliers");
+  await expect(page.locator('[data-test="product-01KT3WDQC3D0J228YJ7EZDK564"] [data-test="product-price"]')).toContainText("$14.15");
+});
+
+test("Login Page Accessible", async ({ page }) => {
+  await page.goto("/");
+
+  // Verify the "Sign In" link is visible and click
+  await expect(page.getByRole("link", { name: "Sign In" })).toBeVisible();
+  await page.getByRole("link", { name: "Sign In" }).click();
+
+  // Navigate to the login page
+  await expect(page).toHaveURL("/auth/login");
+  await expect(page.getByRole("heading", { name: "Login" })).toBeVisible();
+});
