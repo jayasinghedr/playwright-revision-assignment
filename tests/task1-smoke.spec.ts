@@ -1,16 +1,17 @@
 import { test, expect } from "@playwright/test";
 
-test("Home Page Loads", async ({ page }) => {
+test("1.1 Home Page Loads", async ({ page }) => {
   await page.goto("/");
 
   await expect(page).toHaveTitle(/Practice Software Testing/);
   await expect(page).toHaveURL("/");
 
-  // TODO: Verify the site logo/header is visible
-  // await expect(page.getByRole("heading", { name: "TOOL SHOP" })).toBeVisible();
+  // Verify the site logo/header is visible
+  const titleBarLogo = page.locator('.navbar-brand');
+  await expect(titleBarLogo).toBeVisible();
 });
 
-test("Navigation Links Work", async ({ page }) => {
+test("1.2 Navigation Links Work", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("link", { name: "Home" })).toBeVisible();
@@ -22,7 +23,7 @@ test("Navigation Links Work", async ({ page }) => {
   await expect(page).toHaveURL("/contact");
 });
 
-test("Products Are Displayed", async ({ page }) => {
+test("1.3 Products Are Displayed", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator('[data-test="product-01KT3WDQC3D0J228YJ7EZDK564"]')).toBeVisible();
@@ -30,7 +31,7 @@ test("Products Are Displayed", async ({ page }) => {
   await expect(page.locator('[data-test="product-01KT3WDQC3D0J228YJ7EZDK564"] [data-test="product-price"]')).toContainText("$14.15");
 });
 
-test("Login Page Accessible", async ({ page }) => {
+test("1.4 Login Page Accessible", async ({ page }) => {
   await page.goto("/");
 
   // Verify the "Sign In" link is visible and click
